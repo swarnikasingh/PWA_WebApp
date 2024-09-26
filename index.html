@@ -22,6 +22,31 @@
             });
         });
       }
+
+      function searchProducts() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const products = document.getElementsByClassName('product');
+
+        for (let i = 0; i < products.length; i++) {
+          const productName = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+          if (productName.includes(input)) {
+            products[i].style.display = '';
+          } else {
+            products[i].style.display = 'none';
+          }
+        }
+      }
+
+      function addToWishlist(productName) {
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        if (!wishlist.includes(productName)) {
+          wishlist.push(productName);
+          localStorage.setItem('wishlist', JSON.stringify(wishlist));
+          alert(`${productName} has been added to your wishlist!`);
+        } else {
+          alert(`${productName} is already in your wishlist.`);
+        }
+      }
     </script>
   </head>
 
@@ -36,7 +61,12 @@
           <li><a href="#">Social Media</a></li>
           <li><a href="#">Products</a></li>
           <li><a href="#">View Cart</a></li>
+          <li><a href="#">View Wishlist</a></li> <!-- Link to view wishlist (optional) -->
         </ul>
+        <!-- Search Bar -->
+        <div>
+          <input type="text" id="searchInput" placeholder="Search for flowers..." onkeyup="searchProducts()" />
+        </div>
       </div>
     </nav>
 
@@ -46,27 +76,24 @@
         <!-- Product 1 -->
         <div class="product">
           <img src="assets/rose.png" alt="Flower 1" />
-
           <h3>Rose Bouquet</h3>
           <p class="price">RS. 200</p>
-          <button>Add to Cart</button>
+          <button onclick="addToWishlist('Rose Bouquet')">Add to Wishlist</button>
         </div>
 
         <div class="product">
           <img src="assets/sunflower.png" alt="Flower 1" />
-
           <h3>Sunflower Bouquet</h3>
           <p class="price">RS. 200</p>
-          <button>Add to Cart</button>
+          <button onclick="addToWishlist('Sunflower Bouquet')">Add to Wishlist</button>
         </div>
 
         <!-- Product 2 -->
         <div class="product">
           <img src="assets/tulip.png" alt="Flower 3" />
-
           <h3>Tulip Arrangement</h3>
           <p class="price">RS. 200</p>
-          <button>Add to Cart</button>
+          <button onclick="addToWishlist('Tulip Arrangement')">Add to Wishlist</button>
         </div>
         <!-- Add more products as needed -->
       </div>
